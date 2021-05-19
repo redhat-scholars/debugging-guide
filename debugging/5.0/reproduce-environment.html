@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: OpenShift Debugging Workshop</title>
+    <title>The past is relevant only as data :: OpenShift Debugging Workshop</title>
     <link rel="canonical" href="https://redhat-scholars.github.io/course-template/debugging/5.0/reproduce-environment.html">
     <link rel="prev" href="developer-workspace.html">
     <link rel="next" href="visualize-service-mesh.html">
@@ -127,25 +127,26 @@
   </div>
   <div class="content">
 <article class="doc">
-<div class="sect1">
-<h2 id="_new_to_be_find_altered_carbon"><a class="anchor" href="#_new_to_be_find_altered_carbon"></a>"NEW TO BE FIND - Altered Carbon??"</h2>
+<h1 class="page">The past is relevant only as data</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p><em>?? MINUTES PRACTICE</em></p>
+<p><em>15 MINUTES PRACTICE</em></p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/images/castaway.jpg" alt="Cast Away" width="500">
+<div class="paragraph">
+<p>Using <strong>Argo CD</strong>, GitOps continuous delivery tool for Kubernetes, you will be able to reproduce easily the environment of the <strong>Mysterious Apps</strong>.</p>
 </div>
-<div class="title"> <a href="https://miro.medium.com/max/1160/1*icFdR5FcLVvYZDnC8PwePw.jpeg" target="_blank" rel="noopener">Source: https://miro.medium.com/max/1160/1*icFdR5FcLVvYZDnC8PwePw.jpeg</a></div>
 </div>
-<hr>
-<div class="sect2">
-<h3 id="_what_is_argo_cd"><a class="anchor" href="#_what_is_argo_cd"></a>What is Argo CD?</h3>
+</div>
+<div class="sect1">
+<h2 id="_what_is_argo_cd"><a class="anchor" href="#_what_is_argo_cd"></a>What is Argo CD?</h2>
+<div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
-<div class="paragraph">
-<p><span class="image"><img src="_images/{%%20image_path%20argocd-logo.png%20%}" alt="Argo CD Logo" width="200"></span></p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/argocd-logo.png" alt="Argo CD Logo" width="200">
+</div>
 </div>
 <div class="paragraph">
 <p><a href="https://argoproj.github.io/argo-cd/" target="_blank" rel="noopener">Argo CD</a> is a declarative, GitOps continuous delivery tool for Kubernetes.</p>
@@ -160,76 +161,177 @@ deployments can track updates to branches, tags, or pinned to a specific version
 </div>
 </div>
 </div>
-<hr>
 </div>
-<div class="sect2">
-<h3 id="_log_in_to_argo_cd"><a class="anchor" href="#_log_in_to_argo_cd"></a>Log in to Argo CD</h3>
+</div>
+<div class="sect1">
+<h2 id="_log_in_to_argo_cd"><a class="anchor" href="#_log_in_to_argo_cd"></a>Log in to Argo CD</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p><code><strong>Click on the below button called 'Developer GitOps'</strong></code></p>
+<p><code><strong>Click on the 'Developer GitOps' button below</strong></code></p>
 </div>
-<div class="imageblock text-center">
+<div class="imageblock params-link">
 <div class="content">
-<a class="image" href="{{ GITOPS_URL }}" target="_blank" rel="noopener"><img src="_images/images/developer-gitops-button.png" alt="Developer GitOps - Button" width="300"></a>
+<a class="image" href="https://argocd-server-argocd.%APPS_HOSTNAME_SUFFIX%"><img src="_images/developer-gitops-button.png" alt="Developer GitOps - Button" width="300"></a>
 </div>
 </div>
 <div class="paragraph">
-<p>Then <code><strong>login as user{{USER_ID}}/{{ OPENSHIFT_PASSWORD }}</strong></code>, <code><strong>click on 'Allow selected permissions'</strong></code></p>
-</div>
-<div class="paragraph">
-<p>Once completed, you will be redirected to the following page.</p>
+<p>Then <code><strong>log in as user%USER_ID%/%OPENSHIFT_PASSWORD%</strong></code>. Once completed, you will be redirected to the following page.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/images/argocd-home.png" alt="Argo CD - Home Page" width="500">
+<img src="_images/argocd-home.png" alt="Argo CD - Home Page" width="500">
 </div>
 </div>
-<hr>
 </div>
-<div class="sect2">
-<h3 id="_syncdeploy_the_gitops_application"><a class="anchor" href="#_syncdeploy_the_gitops_application"></a>Sync/Deploy The GitOps Application</h3>
+</div>
+<div class="sect1">
+<h2 id="_syncdeploy_the_gitops_application"><a class="anchor" href="#_syncdeploy_the_gitops_application"></a>Sync/Deploy The GitOps Application</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Let&#8217;s deploy the Coolstore Application into cn-project{{USER_ID}}!</p>
-</div>
-<div class="paragraph">
-<p>From the <strong>Application menu</strong>, <code><strong>Click on 'Sync &gt; Synchronize'</strong></code>.</p>
+<p>From the <strong>Application menu</strong>,<code><strong>click on your 'staging-project%USER_ID%' application</strong></code></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/{%%20image_path%20argocd-sync.png%20%20%}" alt="Argo CD - Sync" width="800">
+<img src="_images/argocd-application.png" alt="Argo CD - Application" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p>The application status is initially in yellow <strong>OutOfSync</strong> state since the application has yet to be
+deployed into staging-project%USER_ID% OpenShift project, and no Kubernetes resources have been created.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/argocd-outofsync-details.png" alt="Argo CD - OutOfSync Application" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s deploy the Coolstore Application into <strong>staging-project%USER_ID%</strong>.</p>
+</div>
+<div class="paragraph">
+<p><code><strong>Click on 'Sync &gt; Synchronize'</strong></code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/argocd-sync.png" alt="Argo CD - Sync Application" width="900">
 </div>
 </div>
 <div class="paragraph">
 <p>This task retrieves the manifests from the GitOps Repository and performs <em>kubectl apply</em> command of
-the manifests. Your application is now running and you can now view its resource components,
+the manifests. Your application is now running. You can now view its resource components,
 logs, events, and assessed health status.</p>
 </div>
 <div class="paragraph">
-<p><code><strong>Click on your 'coolstore' application</strong></code> and you should see everything in green.</p>
+<p>You should see everything in green.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/{%%20image_path%20argocd-synced-application.png%20%20%}" alt="Argo CD - Synced Application" width="800">
+<img src="_images/argocd-synced-application.png" alt="Argo CD - Synced Application" width="800">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_controlling_ingress_traffic"><a class="anchor" href="#_controlling_ingress_traffic"></a>Controlling Ingress Traffic</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Application deployed is using <strong>Istio</strong> (<em>covered in the next lab</em>). To be able to access the application from outside of the cluster we have to expose a specific service reachable externally, this service is called <strong>Istio Gateway</strong>. A Gateway allows Istio features such as monitoring and route rules to be applied to traffic entering the cluster.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To open a '&gt;_ workshop_tools' terminal window, <code><strong>click on 'Terminal' &#8594; 'Open Terminal in specific container' &#8594;  'workshop-tools'</strong></code>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Create the Istio <strong>Gateway</strong> and its <strong>VirtualService</strong> <code><strong>by executing the following commands in the '&gt;_ workshop_tools' terminal window</strong></code></p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">cat &lt;&lt;EOF | oc apply --namespace=staging-project%USER_ID% -f -
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: istio-gateway%USER_ID%
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: gateway
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - istio-gateway%USER_ID%
+  http:
+    - match:
+        - uri:
+            prefix: /staging-project%USER_ID%/api
+      rewrite:
+        uri: "/api"
+      route:
+        - destination:
+            port:
+              number: 8080
+            host: gateway
+EOF</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In the {{OPENSHIFT_CONSOLE_URL}}[OpenShift Web Console^], from the <strong>Developer view</strong>,
-<code><strong>Select the 'cn-project{{USER_ID}}'</strong></code> to be taken to the project overview page.</p>
+<p>Then use the new <strong>OpenShift Route</strong> in the Web Service <code><strong>by executing the following commands in the '&gt;_ workshop_tools' terminal window</strong></code></p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">oc set env deployment/web COOLSTORE_GW_ENDPOINT=http://istio-ingressgateway-istio-system.%APPS_HOSTNAME_SUFFIX%/staging-project%USER_ID% -n staging-project%USER_ID%</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_testing_the_application"><a class="anchor" href="#_testing_the_application"></a>Testing the application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the <a href="https://console-openshift-console.%APPS_HOSTNAME_SUFFIX%/topology/ns/staging-project%USER_ID%/graph" target="_blank" rel="noopener">OpenShift Web Console</a>, from the <strong>Developer view</strong>,
+select the <code><strong>staging-project%USER_ID%</strong></code> to be taken to the project overview page.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/openshift-app-deployed-by-argocd.png" alt="OpenShift - Coolstore Project Deployed by Argo CD" width="700">
+</div>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="_images/{%%20image_path%20openshift-app-deployed-by-argocd.png%20%}" alt="OpenShift - Coolstore Project Deployed by Argo CD" width="700"></span></p>
+<p>You can see that all resources of your application have been created by Argo CD.</p>
 </div>
 <div class="paragraph">
-<p>You can see that all resources of your application have been created by Argo CD.
-None of the services is deployed, up and running as we removed all automatic deployment triggers when exporting the configuration
-and there is no image available on your <strong>cn-project{{USER_ID}}</strong> project. <strong>You are going to fix it in the next lab.</strong></p>
+<p>Then, <strong>click on the</strong> <code><strong>Open URL</strong></code> <strong>icon of the Web Service</strong>.</p>
 </div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="_congratulations"><a class="anchor" href="#_congratulations"></a>CONGRATULATIONS!!!</h3>
 <div class="paragraph">
-<p>You are now ready to tackle all the problem<strong>S</strong>!</p>
+<p>Your browser will be redirect to <strong>your Web Service running on OpenShift</strong>.
+You should be able to see the CoolStore application with all products and their inventory status.</p>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/coolstore-application.png" alt="CoolStore Shop" width="840">
+</div>
+</div>
+<div class="paragraph">
+<p>Now, you are now ready to tackle all the problem<strong>S</strong>!</p>
 </div>
 </div>
 </div>
