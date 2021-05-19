@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: OpenShift Debugging Workshop</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/debugging/5.0/reproduce-environment.html">
+    <link rel="prev" href="developer-workspace.html">
+    <link rel="next" href="visualize-service-mesh.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../../_/img/header_logo.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://redhat-scholars.github.io/course-template">OpenShift Debugging Workshop</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="debugging" data-version="5.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">OpenShift Debugging Workshop</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="introduction.html">1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="developer-workspace.html">2. You are not alone</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="reproduce-environment.html">3. The past is relevant only as data</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="visualize-service-mesh.html">4. Blindfolded debugging&#8230;&#8203; Not today</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="perform-trace-analysis.html">5. Trace Within a Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="live-debugging.html">6. Please Help Me!</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">OpenShift Debugging Workshop</span>
+    <span class="version">5.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">OpenShift Debugging Workshop</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">5.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">OpenShift Debugging Workshop</a></li>
+    <li><a href="reproduce-environment.html">3. The past is relevant only as data</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/redhat-scholars/debugging-guide/edit/5.0/documentation/modules/ROOT/pages/reproduce-environment.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<div class="sect1">
+<h2 id="_new_to_be_find_altered_carbon"><a class="anchor" href="#_new_to_be_find_altered_carbon"></a>"NEW TO BE FIND - Altered Carbon??"</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>?? MINUTES PRACTICE</em></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/castaway.jpg" alt="Cast Away" width="500">
+</div>
+<div class="title"> <a href="https://miro.medium.com/max/1160/1*icFdR5FcLVvYZDnC8PwePw.jpeg" target="_blank" rel="noopener">Source: https://miro.medium.com/max/1160/1*icFdR5FcLVvYZDnC8PwePw.jpeg</a></div>
+</div>
+<hr>
+<div class="sect2">
+<h3 id="_what_is_argo_cd"><a class="anchor" href="#_what_is_argo_cd"></a>What is Argo CD?</h3>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><span class="image"><img src="_images/{%%20image_path%20argocd-logo.png%20%}" alt="Argo CD Logo" width="200"></span></p>
+</div>
+<div class="paragraph">
+<p><a href="https://argoproj.github.io/argo-cd/" target="_blank" rel="noopener">Argo CD</a> is a declarative, GitOps continuous delivery tool for Kubernetes.</p>
+</div>
+<div class="paragraph">
+<p>It follows the GitOps pattern of using Git repositories as the source of truth for defining
+the desired application state.</p>
+</div>
+<div class="paragraph">
+<p>It automates the deployment of the desired application states in the specified target environments. Application
+deployments can track updates to branches, tags, or pinned to a specific version of manifests at a Git commit.</p>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_log_in_to_argo_cd"><a class="anchor" href="#_log_in_to_argo_cd"></a>Log in to Argo CD</h3>
+<div class="paragraph">
+<p><code><strong>Click on the below button called 'Developer GitOps'</strong></code></p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<a class="image" href="{{ GITOPS_URL }}" target="_blank" rel="noopener"><img src="_images/images/developer-gitops-button.png" alt="Developer GitOps - Button" width="300"></a>
+</div>
+</div>
+<div class="paragraph">
+<p>Then <code><strong>login as user{{USER_ID}}/{{ OPENSHIFT_PASSWORD }}</strong></code>, <code><strong>click on 'Allow selected permissions'</strong></code></p>
+</div>
+<div class="paragraph">
+<p>Once completed, you will be redirected to the following page.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/argocd-home.png" alt="Argo CD - Home Page" width="500">
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_syncdeploy_the_gitops_application"><a class="anchor" href="#_syncdeploy_the_gitops_application"></a>Sync/Deploy The GitOps Application</h3>
+<div class="paragraph">
+<p>Let&#8217;s deploy the Coolstore Application into cn-project{{USER_ID}}!</p>
+</div>
+<div class="paragraph">
+<p>From the <strong>Application menu</strong>, <code><strong>Click on 'Sync &gt; Synchronize'</strong></code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/{%%20image_path%20argocd-sync.png%20%20%}" alt="Argo CD - Sync" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>This task retrieves the manifests from the GitOps Repository and performs <em>kubectl apply</em> command of
+the manifests. Your application is now running and you can now view its resource components,
+logs, events, and assessed health status.</p>
+</div>
+<div class="paragraph">
+<p><code><strong>Click on your 'coolstore' application</strong></code> and you should see everything in green.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/{%%20image_path%20argocd-synced-application.png%20%20%}" alt="Argo CD - Synced Application" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>In the {{OPENSHIFT_CONSOLE_URL}}[OpenShift Web Console^], from the <strong>Developer view</strong>,
+<code><strong>Select the 'cn-project{{USER_ID}}'</strong></code> to be taken to the project overview page.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/{%%20image_path%20openshift-app-deployed-by-argocd.png%20%}" alt="OpenShift - Coolstore Project Deployed by Argo CD" width="700"></span></p>
+</div>
+<div class="paragraph">
+<p>You can see that all resources of your application have been created by Argo CD.
+None of the services is deployed, up and running as we removed all automatic deployment triggers when exporting the configuration
+and there is no image available on your <strong>cn-project{{USER_ID}}</strong> project. <strong>You are going to fix it in the next lab.</strong></p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_congratulations"><a class="anchor" href="#_congratulations"></a>CONGRATULATIONS!!!</h3>
+<div class="paragraph">
+<p>You are now ready to tackle all the problem<strong>S</strong>!</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="developer-workspace.html" class="query-params-link">2. You are not alone</a></span>
+  <span class="next"><a href="visualize-service-mesh.html" class="query-params-link">4. Blindfolded debugging&#8230;&#8203; Not today</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

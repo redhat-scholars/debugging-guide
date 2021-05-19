@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: OpenShift Debugging Workshop</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/debugging/5.0/live-debugging.html">
+    <link rel="prev" href="perform-trace-analysis.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../../_/img/header_logo.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://redhat-scholars.github.io/course-template">OpenShift Debugging Workshop</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="debugging" data-version="5.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">OpenShift Debugging Workshop</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="introduction.html">1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="developer-workspace.html">2. You are not alone</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="reproduce-environment.html">3. The past is relevant only as data</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="visualize-service-mesh.html">4. Blindfolded debugging&#8230;&#8203; Not today</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="perform-trace-analysis.html">5. Trace Within a Trace</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="live-debugging.html">6. Please Help Me!</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">OpenShift Debugging Workshop</span>
+    <span class="version">5.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">OpenShift Debugging Workshop</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">5.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">OpenShift Debugging Workshop</a></li>
+    <li><a href="live-debugging.html">6. Please Help Me!</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/redhat-scholars/debugging-guide/edit/5.0/documentation/modules/ROOT/pages/live-debugging.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<div class="sect1">
+<h2 id="_mr_robot_please_help_me"><a class="anchor" href="#_mr_robot_please_help_me"></a>"Mr Robot", Please Help Me!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>20 MINUTES PRACTICE</em></p>
+</div>
+<div class="paragraph">
+<p>After checking logs and traces we need the ability to do live debugging of my application, it&#8217;s an essential piece in the development process. It&#8217;s time to enter to the system running. How to penetrate to the secured kubernetes system, I need the POWER of Elliot Alderson.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/mrrobot.png" alt="MrRobot" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://www.usanetwork.com/mrrobot/photos/eps22init1asec" target="_blank" rel="noopener">Source: https://www.usanetwork.com/mrrobot/photos/eps22init1asec</a></p>
+</div>
+<hr>
+<div class="sect2">
+<h3 id="_what_is_kibana"><a class="anchor" href="#_what_is_kibana"></a>What is Kibana?</h3>
+<div class="sidebarblock">
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/Kibana-Logo-Color-H.png" alt="Kibana" width="400">
+</div>
+</div>
+<div class="paragraph">
+<p>OpenShift provides a logging solution based on ElasticSearch, Fluentd, and <a href="https://en.wikipedia.org/wiki/Kibana" target="_blank" rel="noopener">Kibana</a> :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Fluentd</strong> which serves as both the collector and the normalizer,</p>
+</li>
+<li>
+<p><strong>Elasticsearch</strong> serves as the warehouse, and</p>
+</li>
+<li>
+<p><strong>Kibana</strong> is the visualizer (web UI). <strong>Kibana</strong> is a Node.js application. It works very well with Elasticsearch and is tightly coupled to it.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The logging system can provide two views:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Project logs</strong> - access controlled view to specific project logs for running containers and project resources. Our case in this Workshop.</p>
+</li>
+<li>
+<p><strong>Ops view</strong> - aggregate logging of all projects across the cluster, in addition to platform logs (nodes, docker, and masters, for example).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><a href="https://docs.openshift.com/container-platform/3.11/install_config/aggregate_logging.html#aggregate-logging-kibana" target="_blank" rel="noopener">Additionnal information</a></p>
+</div>
+<div class="paragraph">
+<p>Logs management plays a vital role when we encounter an error in the application. If we do not manage the logs, it will be difficult in any application, especially in microservices architecture to find the error and fix it. For our application with lots of microservices we have to identify interesting traces and Kibana is offering an nice User Interface with search field to explore and to analyze logs files easily. Whenever we get some error in the application(s), we can get the error details and analyze them in a simple way.</p>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_investigate_the_bug"><a class="anchor" href="#_investigate_the_bug"></a>Investigate The Bug</h3>
+<div class="paragraph">
+<p>CoolStore application seems to have a bug that causes the inventory status for one of the products not to be displayed in the web interface</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/debug-coolstore-bug.png" alt="Inventory Status Bug" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>This is not an expected behavior!</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start our investigation from the application logs!
+<code><strong>Log in to the {{ KIBANA_URL }}[Kibana Console^] as {{ OPENSHIFT_USER }}/{{ OPENSHIFT_PASSWORD }}</strong></code></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/kibana-console.png" alt="Kibana - Console" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>After you log in, enter the following configuration:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Add the 2 fields: <strong>'kubernetes.pod_name'</strong>, <strong>'message'</strong></p>
+</li>
+<li>
+<p>Search: <strong>'message:(error)'</strong></p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/kibana-search.png" alt="Kibana - Search" width="200">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Push the 'Enter' button</strong>, you will get the following results:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/kibana-error-result.png" alt="Kibana - Error Result" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>Oh! Something seems to be wrong with the response the <strong>Gateway Service</strong> has received from the <strong>Inventory Service</strong> for the product id <strong>'444436'</strong>.
+But there doesn&#8217;t seem to be anything relevant to the <strong>invalid response</strong> error at the <strong>Inventory Service</strong> level!</p>
+</div>
+<div class="paragraph">
+<p><code><strong>Go back to 'Distributed Tracing' menu</code></strong> from {{ KIALI_URL }}[Kiali Console^].
+<code><strong>Select one of the Distributed Trace then on Search field enter the product id '444436'</strong></code>. One span should be highlighted in <strong>light yellow</strong>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/jaeger-trace-inventory.png" alt="Jaeger - Trace Inventory" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Expand the 'inventory.{{ COOLSTORE_PROJECT }}' span</strong> in order to get more detail.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/jaeger-trace-inventory-details.png" alt="Jaeger - Trace Inventory" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>No response came back from <strong>Inventory Service</strong> for the product id <strong>'444436'</strong> and that seems to be the reason the inventory status is not displayed
+on the web interface.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s debug the <strong>Inventory Service</strong> to get to the bottom of this!</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_what_is_squash"><a class="anchor" href="#_what_is_squash"></a>What is Squash ?</h3>
+<div class="sidebarblock">
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/squash-logo.png" alt="Squash Logo" width="150">
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://solo.io/" target="_blank" rel="noopener">Solo.io</a> created <a href="https://squash.solo.io/" target="_blank" rel="noopener">Squash</a> for their use, to assist on the development of their own projects like <a href="https://www.solo.io/glooe" target="_blank" rel="noopener">Gloo</a>,
+a Next Generation API Gateway, and <a href="https://www.solo.io/copy-of-glooe" target="_blank" rel="noopener">Supergloo</a>, a service mesh orchestration platform. Squash can be your daily friend on this journey, and for two fundamental reasons: made for cloud-native workloads and enterprise security concerns.
+<a href="https://squash.solo.io" target="_blank" rel="noopener">Squash</a> is a distributed multi-language debugger that allows s to step by step debug our application.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://solo.io/" target="_blank" rel="noopener">Solo.io</a> mission is to build tools and help people to adopt Service Mesh.</p>
+</div>
+<div class="paragraph">
+<p><strong>For Java developers</strong>, let’s take a look at the flow below, which is for debugging a Java application, for example:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/java_squash.png" alt="Java" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://medium.com/solo-io/squash-the-definitive-cloud-native-debugging-tool-9d10308fe1da" target="_blank" rel="noopener">source Medium - Squash, the definitive cloud-native debugging tool</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://squash.solo.io/" target="_blank" rel="noopener">Squash</a> brings excellent value to Java developers in that it will automatically find the debug port that is specified when the JVM starts. After the port is located, it uses port forward and then relies on the IDE’s capability to leverage JDWP.</p>
+</div>
+<div class="paragraph">
+<p><strong>For Go software engineers</strong> that run and develop for Kubernetes, it’s fair to say that it’s a must-have. There are a <a href="https://kubernetes.io/blog/2018/05/01/developing-on-kubernetes/" target="_blank" rel="noopener">few ways to debug a Go application in Kubernetes</a>, but none is as smooth and considerate of enterprise scenarios as Squash.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/go_squash.png" alt="Go" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://medium.com/solo-io/squash-the-definitive-cloud-native-debugging-tool-9d10308fe1da" target="_blank" rel="noopener">source Medium - Squash, the definitive cloud-native debugging tool</a></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://squash.solo.io/" target="_blank" rel="noopener">Squash</a> brings the power of modern popular debuggers to developers of microservices apps that run on container orchestrator platforms. Choose which containers,
+pods, services or images you want to debug, and <a href="https://squash.solo.io/" target="_blank" rel="noopener">Squash</a> will let you set breakpoints, step through your code while jumping between microservices, follow variable
+values on the fly, and change these values during run time.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_configure_your_workspace_for_squash"><a class="anchor" href="#_configure_your_workspace_for_squash"></a>Configure your workspace for Squash</h3>
+<div class="paragraph">
+<p>In order to use Squash, you configure your workspace.</p>
+</div>
+<div class="paragraph">
+<p>Because the container you are going to debug has multiple processes, you need to specify to Squash which process we want to debug.</p>
+</div>
+<div class="paragraph">
+<p>In your {{ CHE_URL }}[Workspace^], via the Preference menu (Cmd+Comma (⌘,) on macOS or Ctrl+Comma (⌃,) on Windows and Linux),
+<code><strong>add the entry <em>"squash.processMatch": "^java*"</em></strong></code> as following</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-squashprocessmatch.png" alt="Che - Open Squash ProcessMatch" width="700">
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_enable_remote_debugging_for_inventory_service_application"><a class="anchor" href="#_enable_remote_debugging_for_inventory_service_application"></a>Enable Remote Debugging for Inventory Service Application</h3>
+<div class="paragraph">
+<p>Now, you need to switch your application in Remote Debugging Mode. The Java image on OpenShift has built-in support for
+<a href="https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html-single/red_hat_java_s2i_for_openshift/index#example_workflow_remote_debugging_a_java_application_running_on_java_s2i_for_openshift_image" target="_blank" rel="noopener">Remote Debugging</a>
+and it can be enabled by setting the <strong>JAVA_DEBUG=true</strong> environment variables on the deployment config for the pod that you want to remotely debug.</p>
+</div>
+<div class="paragraph">
+<p>In your {{ CHE_URL }}[Workspace^], open a new Terminal with OpenShift tools by <code><strong>clicking
+on the 'My Workspace' white box in the right menu, then 'Plugins' &#8594; 'vscode-openshift-connector' &#8594; '&gt;_ New terminal'</strong></code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-open-openshift-terminal.png" alt="Che - Open OpenShift Terminal" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>In the window called <strong>'&gt;_ vscode-openshift-connector terminal'</strong>, <code><strong>execute the following commands</strong></code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">&gt;_ vscode-openshift-connector terminal</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ oc set env dc/inventory JAVA_DEBUG=true
+$ oc get pods -lapp=inventory,deploymentconfig=inventory -w
+NAME                           READY     STATUS         RESTARTS   AGE
+inventory-1-j4c2g              2/2       Terminating    0          33m
+inventory-2-l22lz              2/2       Running        2          1m
+
+&lt;Ctrl+C&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The status should be <strong>Running</strong> and there should be <strong>2/2</strong> pods in the <strong>Ready</strong> column.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_debugging_with_squash"><a class="anchor" href="#_debugging_with_squash"></a>Debugging with Squash</h3>
+<div class="paragraph">
+<p>Once deployed, you can use Squash to enable easily <strong>Remote Debugging</strong> of your <strong>Inventory Service</strong> pod.</p>
+</div>
+<div class="paragraph">
+<p>In your {{ CHE_URL }}[Workspace^], via the command menu (Cmd+Shift+P ⌘⇧P on macOS or Ctrl+Shift+P ⌃⇧P on Windows and Linux),</p>
+</div>
+<div class="paragraph">
+<p><code><strong>run 'Squash - debug pod' &#8594;  ('Download Squash = yes' &#8594;) '{{ COOLSTORE_PROJECT }}' &#8594; 'inventory' &#8594; 'thorntail' &#8594; 'java'</strong></code></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-squashdebug.png" alt="Che - Squash Debug" width="500">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-squashdownload.png" alt="Che - Squash Download" width="800">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-squashnamespace.png" alt="Che - Squash Namespace" width="500">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-squashpod.png" alt="Che - Squash Pod" width="500">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-squashcontainer.png" alt="Che - Squash Container" width="500">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-squashdebugger.png" alt="Che - Squash Debugger" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p>Once done, your Workspace should switch in <strong>Debug Mode</strong> as you can see the screenshot below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-debugmode.png" alt="Che - Debug Mode" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Go back the 'Explorer' view in the left menu and open the <strong>com.redhat.cloudnative.inventory.InventoryResource</strong> class
+in the <strong>inventory-thorntail</strong> project.</p>
+</div>
+<div class="paragraph">
+<p><code><strong>Add a breakpoint</strong></code> by clicking on the editor sidebar on the line number of the first line of the <strong>getAvailability()</strong>
+method</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-breakpoint.png" alt="Che - Breakpoint" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>In the window called <strong>'&gt;_ vscode-openshift-connector terminal'</strong>, <code><strong>invoke the Inventory Service API with the
+suspect product id</strong></code> in order to pause the code execution at the defined breakpoint:</p>
+</div>
+<div class="listingblock">
+<div class="title">&gt;_ vscode-openshift-connector terminal</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ oc rsh dc/inventory curl -v http://localhost:8080/api/inventory/444436</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The IDE will automatically switch back to the <strong>Debug Panel</strong> and notice that the code execution is paused at the
+breakpoint on <strong>InventoryResource</strong> class.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-breakpointstop.png" alt="Che - Breakpoint Stop" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p><code><strong>Click on the 'Step Over' icon</strong></code> to execute one line and retrieve the inventory object for the
+given product id from the database.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-stepover.png" alt="Che - Step Over" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p>Can you spot the bug now?</p>
+</div>
+<div class="paragraph">
+<p><code><strong>Look at the Variables window</strong></code> on the left hand side. The retrieved <strong>inventory</strong> object is <strong>null</strong>!</p>
+</div>
+<div class="paragraph">
+<p>The non-existing product id is not a problem on its own because it simply could mean
+this product is discontinued and removed from the Inventory database but it&#8217;s not
+removed from the product catalog database yet. The bug is however caused because
+the code returns this <strong>null</strong> value instead of a sensible REST response. If the product
+id does not exist, a proper JSON response stating a zero inventory should be
+returned instead of <strong>null</strong>.</p>
+</div>
+<div class="paragraph">
+<p><code><strong>Click on the <em>Resume</em> icon</strong></code> to continue the code execution and then <code><strong>on the <em>Stop</em> icon</strong></code> to
+end the debug session.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_fix_the_bug"><a class="anchor" href="#_fix_the_bug"></a>Fix the Bug</h3>
+<div class="paragraph">
+<p>Under the <strong>/projects/labs/inventory-thorntail</strong> project, <code><strong>update the 'getAvailability()' method</strong></code> of the <strong>InventoryResource</strong> class
+ as following:</p>
+</div>
+<div class="listingblock">
+<div class="title">InventoryResource.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@GET
+@Path("/api/inventory/{itemId}")
+@Produces(MediaType.APPLICATION_JSON)
+public Inventory getAvailability(@PathParam("itemId") String itemId) {
+    Inventory inventory = em.find(Inventory.class, itemId);
+
+    if (inventory == null) {
+        inventory = new Inventory();
+        inventory.setItemId(itemId);
+        inventory.setQuantity(0);
+    }
+
+    return inventory;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In your {{ CHE_URL }}[Workspace^], via the command menu (Cmd+Shift+P ⌘⇧P on macOS or Ctrl+Shift+P ⌃⇧P on Windows and Linux),</p>
+</div>
+<div class="paragraph">
+<p><code><strong>run 'Task: Run Task&#8230;&#8203;' &#8594;  'che: oc build inventory service'</strong></code></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-runtask.png" alt="Che - RunTask" width="500">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/che-buildinventory.png" alt="Che - Build Inventory Service" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p>When the container is rebuilt and deployed, point your browser at the Web route and verify
+that the inventory status is visible for all products. The suspect product should show
+the inventory status as <strong>Not in Stock</strong>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/debug-coolstore-bug-fixed.png" alt="Inventory Status Bug Fixed" width="800">
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_congratulations"><a class="anchor" href="#_congratulations"></a>CONGRATULATIONS!!!</h3>
+<div class="paragraph">
+<p>Well done and congratulations for completing all the labs.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="perform-trace-analysis.html" class="query-params-link">5. Trace Within a Trace</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
