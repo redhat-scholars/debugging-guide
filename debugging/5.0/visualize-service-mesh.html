@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: OpenShift Debugging Workshop</title>
+    <title>Blindfolded debugging&#8230;&#8203; Not today!! :: OpenShift Debugging Workshop</title>
     <link rel="canonical" href="https://redhat-scholars.github.io/course-template/debugging/5.0/visualize-service-mesh.html">
     <link rel="prev" href="reproduce-environment.html">
     <link rel="next" href="perform-trace-analysis.html">
@@ -127,140 +127,132 @@
   </div>
   <div class="content">
 <article class="doc">
-<div class="sect1">
-<h2 id="_bird_box_not_today"><a class="anchor" href="#_bird_box_not_today"></a>"Bird Box"&#8230;&#8203; Not Today!!</h2>
+<h1 class="page">Blindfolded debugging&#8230;&#8203; Not today!!</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p><em>15 MINUTES PRACTICE</em></p>
 </div>
 <div class="paragraph">
-<p>The <strong>Mysterious Application</strong> in your <strong>Developer Workspaces</strong> is now up and running. It is composed of several components, but so far, you have no clue about how the application is working.
-Going all over this application and debugging it completely blindfolded is time consuming and a crazy bid as Malorie does in <strong>Bird Box</strong>.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/images/birdbox.png" alt="BirdBox" width="500">
-</div>
-</div>
-<div class="paragraph text-center">
-<p><a href="https://ewedit.files.wordpress.com/2019/01/bird_box_018.jpg" target="_blank" rel="noopener">Source: https://ewedit.files.wordpress.com/2019/01/bird_box_018.jpg</a></p>
+<p>The <strong>Mysterious Application</strong> in your developer environment is now up and running. It is composed of several components, but so far, you have no clue about how the application is working.
+Going all over this application and debugging it completely blindfolded is time consuming and a crazy bid.</p>
 </div>
 <div class="paragraph">
 <p>Red Hat OpenShift Container Platform provides services to get observability of applications and to understand how different components are interacting with each other.</p>
 </div>
-<div class="sect2">
-<h3 id="_what_is_kiali"><a class="anchor" href="#_what_is_kiali"></a>What is Kiali?</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_kiali"><a class="anchor" href="#_what_is_kiali"></a>What is Kiali?</h2>
+<div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
 <div class="imageblock">
 <div class="content">
-<img src="_images/images/kiali.png" alt="Kiali" width="400">
+<img src="_images/kiali-logo.png" alt="Kiali" width="400">
 </div>
 </div>
 <div class="paragraph">
-<p>A Microservice Architecture breaks up the monolith into many smaller pieces that are composed together. Patterns to secure the communication between services like fault tolerance (via timeout, retry, circuit breaking, etc.) have come up as well as distributed tracing to be able to see where calls are going.</p>
+<p>A Microservice Architecture breaks up the monolith into many smaller pieces that are composed together.
+Patterns to secure the communication between services like fault tolerance (via timeout, retry, circuit breaking, etc.) are needed as well as distributed tracing to be able to see where calls are going.</p>
 </div>
 <div class="paragraph">
-<p>A service mesh can now provide these services on a platform level and frees the application writers from those tasks. Routing decisions are done at the mesh level.</p>
+<p>A service mesh can now provide these services at a platform level and free the developer from those tasks.
+Routing decisions are done at the mesh level.</p>
 </div>
 <div class="paragraph">
-<p><a href="https://www.kiali.io" target="_blank" rel="noopener">Kiali</a> works with Istio, in OpenShift or Kubernetes, to visualize the service mesh topology, to provide visibility into features like circuit breakers, request rates and more. It offers insights about the mesh components at different levels, from abstract Applications to Services and Workloads.</p>
+<p><a href="https://www.kiali.io" target="_blank" rel="noopener">Kiali</a> works with Istio, in OpenShift or Kubernetes, to visualize the service mesh topology, to
+provide visibility into features like circuit breakers, request rates and more. It offers insights about the mesh components at different levels,
+from abstract Applications to Services and Workloads.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_kiali_please_tell_me_how_is_the_application_working"><a class="anchor" href="#_kiali_please_tell_me_how_is_the_application_working"></a>"Kiali, please tell me, how is the application working?"</h3>
+</div>
+<div class="sect1">
+<h2 id="_kiali_please_tell_me_how_is_this_application_working"><a class="anchor" href="#_kiali_please_tell_me_how_is_this_application_working"></a>Kiali, please tell me, how is this application working?</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Kiali provides an interactive graph view of your namespace in real time, being able to display the interactions at several levels (applications, versions, workloads), with contextual information and charts on the selected graph node or edge.</p>
 </div>
 <div class="paragraph">
-<p>First, you need to access to Kiali.
-<code><strong>Launch a browser and navigate to {{ KIALI_URL }}[Kiali Console^] and log in as {{ OPENSHIFT_USER }}/{{ OPENSHIFT_PASSWORD }}</strong></code></p>
+<p><code><strong>Click on the 'Developer Observability' button below</strong></code></p>
+</div>
+<div class="imageblock text-center params-link">
+<div class="content">
+<a class="image" href="https://kiali-istio-system.%APPS_HOSTNAME_SUFFIX%" target="_blank" rel="noopener"><img src="_images/developer-observability-button.png" alt="Developer Observability - Button" width="300"></a>
+</div>
 </div>
 <div class="paragraph">
-<p>After you log in, <code><strong>click on 'Graph'</code></strong> in the left navigation and enter the following configuration:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Namespace: <strong>{{ COOLSTORE_PROJECT }}</strong></p>
-</li>
-<li>
-<p>Display: <strong>check 'Traffic Animation'</strong></p>
-</li>
-</ul>
+<p>Then, <code><strong>log in with OpenShift as user%USER_ID%/%OPENSHIFT_PASSWORD%'</strong></code></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/images/kiali-graph.png" alt="Kiali - Graph" width="700">
+<img src="_images/kiali-login.png" alt="Kiali- Log In" width="300">
 </div>
 </div>
 <div class="paragraph">
-<p>This page shows a graph with all the microservices, connected by the requests going through them. On this page, you can see how the services interact with each other.</p>
+<p>In the <strong>'Graph' view</strong>, <code><strong>enter the following configuration</strong></code>:</p>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Graph Settings</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Namespace</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">staging-project%USER_ID%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type Graph</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Versioned app graph</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Display</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">'Traffic Animation' checked</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hide</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">node = unknown OR service*=PassthroughCluster</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
-<p>Even if the application <strong>seemed</strong> working fine, there is a problem in the <strong>Gateway Service</strong> which sends a <strong>4xx http error</strong>.</p>
+<p>The outcome is a graph with all the services, connected by the requests going through them.
+You can see how the services interact with each other.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/images/kiali-4xx.png" alt="Kiali - 4xx" width="300">
+<img src="_images/kiali-graph.png" alt="Kiali- Graph" width="900">
 </div>
 </div>
-<div class="admonitionblock warning">
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>In order to get the previous screen, please reload the <strong>Web UI</strong> more than one time!</p>
+<p>In order to get the previous screen, you need to <strong>generate traffic</strong>. <code><strong>Please reload the Web UI several times!</strong></code></p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Open the Javascript Console from your browser, and you will find a <strong>404 error</strong> when calling the <strong>'gateway/api/cart'</strong> API.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/images/gateway-cart-missing.png" alt="Gateway Error" width="700">
-</div>
+<p>Even if the application <strong>seemed</strong> working fine, <code><strong>please compare the all Services you have between the OpenShift Console and the Kiali Graph</strong></code>.</p>
 </div>
 <div class="paragraph">
-<p>Indeed, when you check the APIs exposed by the <strong>Gateway Service</strong>, you cannot find any <strong>'/api/cart/id-*'</strong> one.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s fix it!!</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_build_and_deploy_the_quarkus_microservice_the_cart_service"><a class="anchor" href="#_build_and_deploy_the_quarkus_microservice_the_cart_service"></a>Build and deploy the Quarkus microservice, the Cart Service</h3>
-<div class="paragraph">
-<p><a href="https://quarkus.io/" target="_blank" rel="noopener">Quarkus</a> is a Kubernetes Native Java stack tailored for GraalVM &amp; OpenJDK HotSpot, crafted from the best of breed Java libraries and standards.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Architectured for running in serverless and container environments like Knative and OpenShift.</p>
-</li>
-<li>
-<p>Designed around a <strong>container first philosophy</strong>, what this means in real terms is that Quarkus is optimised for low memory usage and fast startup times.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>We already compiled the Cart Service application to a native executable called <strong>cart-1.0-SNAPSHOT-runner</strong>. You can find in the <strong>cart-quarkus</strong> project under the <strong>src/target</strong> folder. It improves the startup time of the <strong>Cart Service</strong>, and produces a minimal disk footprint. The executable would have everything to run the application including the "JVM" and the application.</p>
-</div>
-<div class="paragraph">
-<p>In this chapter, you will focus on creating a Docker image using the produced native executable.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/images/containerization-process.png" alt="Quarkus - Container" width="700">
-</div>
+<p><strong>Have you found the one difference?</strong> Great! Let&#8217;s investigate!</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -269,112 +261,113 @@ Going all over this application and debugging it completely blindfolded is time 
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>If you want, take a moment to examine the source code of the Cart Service implemented with <a href="https://quarkus.io/" target="_blank" rel="noopener">Quarkus</a>.
-You can find it under the package <strong>com.redhat.cloudnative</strong> in the <strong>src/main/java</strong> directory of the <strong>cart-quarkus</strong> project.</p>
-</div>
+This is a database missing from the Kiali Graph&#8230;&#8203;
 </td>
 </tr>
 </table>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_check_the_catalog_service_configuration"><a class="anchor" href="#_check_the_catalog_service_configuration"></a>Check the Catalog Service Configuration</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>In your {{ CHE_URL }}[Workspace^], open a new Terminal with OpenShift tools by <code><strong>clicking
-on the 'My Workspace' white box in the right menu, then 'Plugins' &#8594; 'vscode-openshift-connector' &#8594; '&gt;_ New terminal'</strong></code>:</p>
+<p>You clearly see that the <strong>Catalog PostgreSQL Service</strong> is not a part of the Kiali graph.
+That means this service is not called by the <strong>Catalog Service</strong> as it should be.</p>
+</div>
+<div class="paragraph">
+<p>In the <a href="https://console-openshift-console.%APPS_HOSTNAME_SUFFIX%/topology/ns/staging-project%USER_ID%/graph" class="params-link" target="_blank" rel="noopener">OpenShift Web Console</a>, from the <strong>Developer view</strong>,
+<code><strong>click on 'ConfigMaps' &gt; 'catalog'</strong></code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/images/che-open-openshift-terminal.png" alt="Che - Open OpenShift Terminal" width="700">
+<img src="_images/openshift-catalog-configmap.png" alt="Che - OpenShift Create Config Map" width="900">
 </div>
 </div>
 <div class="paragraph">
-<p>In the window called <strong>'&gt;_ vscode-openshift-connector terminal'</strong>, <code><strong>execute the following commands</strong></code>:</p>
+<p><code><strong>Take a look at the Data Section</strong></code>. <strong>Catalog Service</strong> is configured with the development parameters.
+Indeed, it is currently configured with an InMemory Database (H2), which is used for development purposes only.</p>
 </div>
-<div class="listingblock">
-<div class="title">&gt;_ vscode-openshift-connector terminal</div>
+<div class="imageblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"># To build the image on OpenShift
-$ oc new-build --binary --name=cart -lapp=cart,version=v1.0
-$ oc patch bc/cart -p '{"spec":{"strategy":{"dockerStrategy":{"dockerfilePath":"src/main/docker/Dockerfile"}}}}'
-$ oc start-build cart --from-dir /projects/labs/cart-quarkus --follow
+<img src="_images/openshift-catalog-configmap-h2.png" alt="OpenShift - Catalog ConfigMap H2" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p>This is the reason why the <strong>Catalog PostgreSQL Service</strong> is not currently using.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fix_the_issue"><a class="anchor" href="#_fix_the_issue"></a>Fix the issue</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s change the configuration to connect the Catalog Service to the PostgreSQL database.</p>
+</div>
+<div class="paragraph">
+<p><code><strong>Click on the tab 'YAML' of the 'CM catalog' and update the content as follows:</strong></code></p>
+</div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">data:
+  application.properties: |
+    spring.application.name=catalog
+    server.port=8080
 
-# To instantiate the image
-$ oc new-app --image-stream=cart:latest -lapp=cart,version=v1.0
-
-# To deploy an Istio SideCar and configure Catalog Service Deployment
-$ oc rollout pause dc/cart
-$ oc patch dc/cart --patch '{"spec": {"template": {"metadata": {"annotations": {"sidecar.istio.io/inject": "true"}}}}}'
-$ oc set env dc/cart CATALOG_ENDPOINT=http://catalog:8080
-$ oc rollout resume dc/cart</code></pre>
+    spring.datasource.url=jdbc:postgresql://catalog-postgresql:5432/catalogdb<i class="conum" data-value="1"></i><b>(1)</b>
+    spring.datasource.username=catalog
+    spring.datasource.password=catalog
+    spring.datasource.driver-class-name=org.postgresql.Driver<i class="conum" data-value="2"></i><b>(2)</b>
+    spring.jpa.hibernate.ddl-auto=create
+    spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>PostgreSQL JDBC URL</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>PostgresSQL driver</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The result should look like as follows:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/images/console-cart.png" alt="Openshift Console Cart" width="800">
+<img src="_images/update-configmap.png" alt="OpenShift - Update Configmap" width="500">
 </div>
 </div>
 <div class="paragraph">
-<p><strong>YOU HAVE TO SEE THAT!</strong>
-Have a look to the log of the <strong>Cart Service</strong> pod by cliking in the dark blue circle and then <strong>just admire its amazing FAST BOOT TIME!</strong></p>
-</div>
-<div class="listingblock">
-<div class="title">Cart Service logs</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">2019-04-01 20:13:35,623 INFO  [io.quarkus] (main) Quarkus 0.11.0 started in 0.009s. Listening on: http://0.0.0.0:8080
-2019-04-01 20:13:35,623 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy, resteasy-jsonb, smallrye-rest-client]
-2019-04-01 20:17:08,790 INFO  [com.red.clo.ser.ShoppingCartService] (XNIO-1 task-1) Using local cache for cart data</code></pre>
-</div>
+<p>Then, <code><strong>click on 'Save'</strong></code>.</p>
 </div>
 <div class="paragraph">
-<p><strong>AND YES, IT&#8217;S A JAVA APPLICATION!</strong></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_update_gateway_service"><a class="anchor" href="#_update_gateway_service"></a>Update Gateway Service</h3>
-<div class="paragraph">
-<p>Previously, we deployed the <strong>Cart Service</strong>. Now, you have to take it in account in the <strong>Gateway Service</strong>.</p>
-</div>
-<div class="paragraph">
-<p>Under the <strong>/projects/labs/gateway-vertx</strong> project, <code><strong>uncomment the '/api/cart/:cardId' route in the 'start()' method of the 'GatewayVerticle' class</strong></code> as following:</p>
-</div>
-<div class="listingblock">
-<div class="title">GatewayVerticle.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">        // Cart Route
-        router.get("/api/cart/:cardId").handler(this::getCartHandler);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In your {{ CHE_URL }}[Workspace^], via the command menu (Cmd+Shift+P ⌘⇧P on macOS or Ctrl+Shift+P ⌃⇧P on Windows and Linux),
-<code><strong>run 'Task: Run Task&#8230;&#8203;' &#8594;  'che: oc build gateway service'</strong></code></p>
+<p>Now, you have to re-deploy the <strong>Catalog Service</strong> with the latest configuration.
+<code><strong>Go back to 'Topology', click on the 'DC catalog-v1' bubble and select 'Start Rollout' action</strong></code></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/images/che-runtask.png" alt="Che - RunTask" width="500">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/images/che-buildgateway.png" alt="Che - Build Gateway Service" width="500">
+<img src="_images/openshift-catalog-rollout.png" alt="OpenShift - Catalog Rollout" width="900">
 </div>
 </div>
 <div class="paragraph">
-<p>Once deployed, check your javascript console that the <strong>404 error</strong> has disappeared.
-In Kiali Graph, the <strong>Gateway Service</strong> is now green and you can see the new <strong>Cart Service</strong> is now present!</p>
+<p>Once the application is up and running, <code><strong>refresh your browser opened on the Coolstore Application
+and visualize the change on the Kiali graph</strong></code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/images/gateway-cart-fixed.png" alt="Gateway Fixed" width="700">
+<img src="_images/kiali-graph-with-db.png" alt="Kiali- Graph with DB" width="900">
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_congratulations"><a class="anchor" href="#_congratulations"></a>CONGRATULATIONS!!!</h3>
 <div class="paragraph">
-<p>You survive and you put off the blindfold on your own. But it is not THE END&#8230;&#8203;</p>
+<p>You survived and you put off the blindfold on your own. But it is not THE END &#8230;&#8203;</p>
 </div>
 <div class="paragraph">
 <p>Now, let&#8217;s go deeper!!</p>
-</div>
 </div>
 </div>
 </div>
