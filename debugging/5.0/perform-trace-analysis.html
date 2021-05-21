@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: OpenShift Debugging Workshop</title>
+    <title>"Trace Within a Trace" :: OpenShift Debugging Workshop</title>
     <link rel="canonical" href="https://redhat-scholars.github.io/course-template/debugging/5.0/perform-trace-analysis.html">
     <link rel="prev" href="visualize-service-mesh.html">
     <link rel="next" href="live-debugging.html">
@@ -127,30 +127,26 @@
   </div>
   <div class="content">
 <article class="doc">
-<div class="sect1">
-<h2 id="_dream_within_a_dream"><a class="anchor" href="#_dream_within_a_dream"></a>"Dream Within a Dream"</h2>
+<h1 class="page">"Trace Within a Trace"</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p><em>20 MINUTES PRACTICE</em></p>
+<p><em>20 MINUTE PRACTICE</em></p>
 </div>
 <div class="paragraph">
-<p>As Cobb and Arthur in <strong>Inception</strong>, let&#8217;s perform a <strong>"Trace Within a Trace" Strategy</strong> called <strong>Distributed Tracing</strong> using Red Hat OpenShift Container Platform to infiltrate the application traces and extract valuable information to solve the issues</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/images/inception.jpg" alt="Inception" width="500">
+<p>Let&#8217;s perform a "Trace Within a Trace" strategy called <strong>Distributed Tracing</strong> to infiltrate the
+application traces and extract valuable information to solve the issues.</p>
 </div>
 </div>
-<div class="paragraph text-center">
-<p><a href="https://wallpapercave.com/wp/ZDpGHyX.jpg" target="_blank" rel="noopener">Source: https://wallpapercave.com/wp/ZDpGHyX.jpg</a></p>
 </div>
-<div class="sect2">
-<h3 id="_what_is_jaeger"><a class="anchor" href="#_what_is_jaeger"></a>What is Jaeger?</h3>
+<div class="sect1">
+<h2 id="_what_is_jaeger"><a class="anchor" href="#_what_is_jaeger"></a>What is Jaeger?</h2>
+<div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
 <div class="imageblock">
 <div class="content">
-<img src="_images/images/jaeger-logo.png" alt="Jaeger" width="400">
+<img src="_images/jaeger-logo.png" alt="Jaeger" width="400">
 </div>
 </div>
 <div class="paragraph">
@@ -181,246 +177,148 @@
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_what_are_you_hidding_mrmrs_application"><a class="anchor" href="#_what_are_you_hidding_mrmrs_application"></a>What are you hidding, Mr/Mrs <strong>Application</strong>?</h3>
-<div class="admonitionblock important">
+</div>
+<div class="sect1">
+<h2 id="_what_are_you_hidding_mrmrs_application"><a class="anchor" href="#_what_are_you_hidding_mrmrs_application"></a>What are you hidding, Mr/Mrs <strong>Application</strong>?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>From the <a href="https://kiali-istio-system.%APPS_HOSTNAME_SUFFIX%" target="_blank" rel="noopener">Kiali Console</a>, <code><strong>click on the 'Distributed Tracing'</strong></code> in the left navigation.</p>
+</div>
+<div class="paragraph">
+<p>Then <code><strong>login as user%USER_ID%/%OPENSHIFT_PASSWORD%</strong></code> and enter the following configuration:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Jaeger Settings</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">istio-ingressgateway</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><code><strong>Click on the 'Find Traces' button</strong></code></p>
+</div>
+<div class="paragraph">
+<p>Now you can see the <strong>distributed traces</strong> of our application.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/jaeger-query.png" alt="Jaeger - Query" width="800">
+</div>
+</div>
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Because of certificates issues, you need first to access the main {{ JAEGER_URL }}[Jaeger Console^] to use it through Kiali.</p>
+<p><strong>Distributed Tracing</strong> involves propagating the tracing context from service to service by sending certain
+incoming HTTP headers downstream to outbound requests. To do this, services need some hints to tie together the entire trace.
+They need to propagate the appropriate HTTP headers so that when the proxies send span information,
+the spans can be correlated correctly into a single trace.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>From the {{ KIALI_URL }}[Kiali Console^], <code><strong>click on the 'Distributed Tracing'</strong></code> in the left navigation and enter the following configuration:</p>
+<p><code><strong>On the right-hand side of a specific trace, take a look at the duration.</strong></code>
+The end-to-end requests takes <strong>more than 300ms</strong> which you could judge as <strong>normal</strong> but …​
+Let&#8217;s get more details <code><strong>by clicking a trace on title bar</strong></code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/jaeger-trace-details.png" alt="Jaeger - Traces View" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p>Interesting &#8230;&#8203; <strong>The major part of a call is consuming by the Catalog Service</strong>.
+Let’s continue the investigation on the source code side.</p>
+</div>
+<div class="paragraph">
+<p>In your <a href="http://codeready-workspaces.%APPS_HOSTNAME_SUFFIX%" class="params-link" target="_blank" rel="noopener">Workspace</a>,
+<code><strong>Examine 'com.redhat.cloudnative.catalog.CatalogController' class</strong></code> in the <strong>/projects/workshop/catalog-spring-boot/src/main</strong> directory:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/che-catalog-controller.png" alt="Catalog Controller - Java code" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>And yes, this burns your eyes, right?! There is <strong>a random pause in the execution of current thread</strong> (<em>Thread.sleep(random.nextInt(10) * 10)</em>)
+and basically it is complicated to understand what the developer attempted to achieve.</p>
+</div>
+<div class="paragraph">
+<p>This piece of code is a part of the <em>getAll()</em> method which returns the list of all products from the database.
+As you are a Java expert, you are about to create a masterpiece by both simplifying the code and increasing performance.</p>
+</div>
+<div class="paragraph">
+<p>To fix it, we will use a new tool called <a href="https://github.com/Maistra/istio-workspace" target="_blank" rel="noopener">Istio Workspace</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_istio_workspace"><a class="anchor" href="#_what_is_istio_workspace"></a>What is Istio Workspace?</h2>
+<div class="sectionbody">
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><a href="https://github.com/Maistra/istio-workspace" target="_blank" rel="noopener">Istio Workspace</a> is a tool that let you safely develop and test on any kubernetes cluster without distracting others.</p>
+</div>
+<div class="paragraph">
+<p>The key value proposition is to allow you run service you are working on locally but interact with the other services running in the cluster.</p>
+</div>
+<div class="paragraph">
+<p>This way you can use your favourite tools and avoid making your machine sweating from trying to run "the whole cloud" where your application is deployed.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, you can develop and test your changes without interfering with other users. Only you would be able to see your changes before they hit the production.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Select a Namespace: <strong>{{ COOLSTORE_PROJECT }}</strong></p>
+<p>Do you have confidence that your Test and Stage environments reflect reality?</p>
 </li>
 <li>
-<p>Select a Service: <strong>gateway</strong></p>
+<p>Are they easy to keep up-to-date with production?</p>
 </li>
 <li>
-<p>Then click on the <strong>'Search Traces' button</strong> on the right</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/images/jaeger-query.png" alt="Jaeger - Query" width="800">
-</div>
-</div>
-<div class="paragraph">
-<p>By default, <strong>Service Mesh</strong> automatically sends collected tracing data to Jaeger, so that we are able to <strong>only see individual trace</strong> (one-to-one service call).</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>1 individual trace for <strong>Gateway Service</strong> &#8594; <strong>Catalog Service</strong></p>
+<p>Can you reproduce production failure in these environments or locally?</p>
 </li>
 <li>
-<p>7 individual traces for <strong>Gateway Service</strong> &#8594; <strong>Inventory Service</strong></p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/images/jaeger-trace-2spans-view.png" alt="Jaeger - Traces View" width="800">
-</div>
-</div>
-<div class="paragraph">
-<p>As you have called several times the <strong>Gateway Service</strong> through the Web UI, you find much more than 8 spans in Jaeger and you cannot easily observe the entire trace for an end-to-end request.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_enabling_distributed_context_propagation"><a class="anchor" href="#_enabling_distributed_context_propagation"></a>Enabling Distributed Context Propagation</h3>
-<div class="paragraph">
-<p><strong>Distributed Tracing</strong> involves propagating the tracing context from service to service by sending certain incoming HTTP headers downstream to outbound requests. To do this, services need some hints to tie together the entire trace. They need to propagate the appropriate HTTP headers so that when the proxies send span information, the spans can be correlated correctly into a single trace.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s enable Distributed Context Propagation from the <strong>Gateway Service</strong>.</p>
-</div>
-<div class="paragraph">
-<p>First, you are going to intercept the following header creating by <strong>Service Mesh</strong> in order to add them into the outbound requests:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>x-request-id</p>
-</li>
-<li>
-<p>x-b3-traceid</p>
-</li>
-<li>
-<p>x-b3-spanid</p>
-</li>
-<li>
-<p>x-b3-parentspanid</p>
-</li>
-<li>
-<p>x-b3-sampled</p>
-</li>
-<li>
-<p>x-b3-flags</p>
-</li>
-<li>
-<p>x-ot-span-context</p>
+<p>What about that error you keep seeing on production that’s never occurring on Test or Stage?</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>In Che7, under the <strong>src/main/java</strong> directory of the <strong>gateway-vertx</strong> project,
-<code><strong>create a new 'TracingInterceptor' class</strong></code> in the <strong>com.redhat.cloudnative.gateway</strong> package as following:</p>
-</div>
-<div class="listingblock">
-<div class="title">TracingInterceptor.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package com.redhat.cloudnative.gateway;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import io.vertx.core.Handler;
-import io.vertx.ext.web.client.impl.WebClientInternal;
-import io.vertx.rxjava.ext.web.RoutingContext;
-import io.vertx.rxjava.ext.web.client.WebClient;
-
-public class TracingInterceptor {
-    private static final Logger LOG = LoggerFactory.getLogger(TracingInterceptor.class);
-
-    private static final List&lt;String&gt; FORWARDED_HEADER_NAMES = Arrays.asList(
-        "x-request-id",
-        "x-b3-traceid",
-        "x-b3-spanid",
-        "x-b3-parentspanid",
-        "x-b3-sampled",
-        "x-b3-flags",
-        "x-ot-span-context"
-    );
-
-    private static final String X_TRACING_HEADERS = "X-Tracing-Headers";
-
-    private TracingInterceptor() {
-        // Avoid direct instantiation.
-    }
-
-    static Handler&lt;RoutingContext&gt; create() {
-        return rc -&gt; {
-            Set&lt;String&gt; names = rc.request().headers().names();
-            Map&lt;String, List&lt;String&gt;&gt; headers = names.stream()
-                .map(String::toLowerCase)
-                .filter(FORWARDED_HEADER_NAMES::contains)
-                .collect(Collectors.toMap(
-                    Function.identity(),
-                    h -&gt; Collections.singletonList(rc.request().getHeader(h))
-                ));
-            rc.put(X_TRACING_HEADERS, headers);
-            rc.next();
-        };
-    }
-
-    static WebClient propagate(WebClient client, RoutingContext rc) {
-        WebClientInternal delegate = (WebClientInternal) client.getDelegate();
-        delegate.addInterceptor(ctx -&gt; {
-            Map&lt;String, List&lt;String&gt;&gt; headers = rc.get(X_TRACING_HEADERS);
-            if (headers != null) {
-                LOG.info("Propagating header: {}", headers);
-                headers.forEach((s, l) -&gt; l.forEach(v -&gt; ctx.request().putHeader(s, v)));
-            }
-            ctx.next();
-        });
-        return client;
-    }
-}</code></pre>
-</div>
+<p>It has been always hard to test new functionality before it reaches production. Even more so, with the shift from a <strong>monolith</strong> to <strong>microservices</strong> and increasing scale.
+It is practically impossible to spin up the entire solution on your laptop to debug and test a suspicious piece of code. Testing on production is no longer a meme. It’s reality and a necessity.</p>
 </div>
 <div class="paragraph">
-<p>Then, route all traffic into the <strong>TracingInterceptor</strong> handler <code><strong>by uncommenting the 'TraceInterceptor handler' configuration in the 'start()' method of the 'GatewayVerticle' class</strong></code> with the following code:</p>
-</div>
-<div class="listingblock">
-<div class="title">GatewayVerticle.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">        // Enable TraceInterceptor handler
-        router.route()
-            .order(-1)
-            .handler(TracingInterceptor.create());</code></pre>
+<p>This project works with Istio and Kubernetes or Openshift to give you confidence that your changes won’t blow up production cluster and your users won’t even notice a glitch.</p>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_route_the_traffic_on_your_local_workspace"><a class="anchor" href="#_route_the_traffic_on_your_local_workspace"></a>Route the traffic on your local workspace</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Finally, propagate the headers from the incoming request <strong>Gateway Service</strong> to any outgoing requests <strong>Catalog Service</strong> and <strong>Inventory Service</strong> using the <strong>propagate()</strong> method from <strong>TracingInterceptor</strong> class when calling outgoing services in the <strong>products()</strong> method.</p>
-</div>
-<div class="listingblock">
-<div class="title">GatewayVerticle.java</div>
-<div class="content">
-<pre>        private void products(RoutingContext rc) {
-            [...]
-            <span class="line-through">catalog.get("/api/catalog")</span>
-            TracingInterceptor.propagate(catalog, rc).get("/api/catalog")
-            [...]
-            <span class="line-through">inventory.get("/api/inventory/" + product.getString("itemId"))</span>
-            TracingInterceptor.propagate(inventory, rc).get("/api/inventory/" + product.getString("itemId"))
-            [...]
-        }</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now push the new version of the source code to OpenShift.</p>
-</div>
-<div class="paragraph">
-<p>In your {{ CHE_URL }}[Workspace^], via the command menu (Cmd+Shift+P ⌘⇧P on macOS or Ctrl+Shift+P ⌃⇧P on Windows and Linux),
-<code><strong>run 'Task: Run Task&#8230;&#8203;' &#8594;  'che: oc build gateway service'</strong></code></p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/images/che-runtask.png" alt="Che - RunTask" width="500">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/images/che-buildgateway.png" alt="Che - Build Gateway Service" width="500">
-</div>
-</div>
-<div class="paragraph">
-<p><code><strong>Go back to Distributed Tracing menu</code></strong> from {{ KIALI_URL }}[Kiali Console^] and see the result.
-Now you have the aggregated traces and it is much more better.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/images/jaeger-trace-delay-view.png" alt="Jaeger - Trace Delay View" width="700">
-</div>
-</div>
-<div class="paragraph">
-<p>On the left hand side, you have information like the duration.
-One request takes <strong>more than 400ms</strong> which you could judge as <strong>normal</strong> but &#8230;&#8203;</p>
-</div>
-<div class="paragraph">
-<p><code><strong>Let’s click on a trace title bar.</strong></code></p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/images/jaeger-trace-delay-detail-view.png" alt="Jaeger - Trace Delay Detail View" width="700">
-</div>
-</div>
-<div class="paragraph">
-<p>Interesting&#8230;&#8203; The major part of a call is consuming by the <strong>Catalog Service</strong>.
-So let&#8217;s have a look on its code.
-<code><strong>Go through the 'catalog-spring-boot' project and find the following piece of code</strong></code>:</p>
+<p>First we have to fix the problem. <strong>Replace the content of the</strong> <code><strong>getAll()</strong></code> <strong>method</strong> as following:</p>
 </div>
 <div class="listingblock">
 <div class="title">CatalogController.java</div>
@@ -428,90 +326,153 @@ So let&#8217;s have a look on its code.
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ResponseBody
 @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public List&lt;Product&gt; getAll() {
+    System.out.println("&gt;&gt;&gt;&gt; getAll, but faster");
     Spliterator&lt;Product&gt; products = repository.findAll().spliterator();
-    Random random = new Random();
-
-    List&lt;Product&gt; result = new ArrayList&lt;Product&gt;();
-    products.forEachRemaining(product -&gt; {
-        Class&lt;Product&gt; clazz = Product.class;
-        if (clazz.isInstance(product)){
-            try {
-                Thread.sleep(random.nextInt(10) * 10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        result.add(product);
-    });
-    return result;
+    return StreamSupport.stream(products, false).collect(Collectors.toList());
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And yes, this burns your eyes, right?! Basically nobody could understand what the developer attempted to achieve but we do not have the time for that.
-This piece of code is a part of the <strong>getAll()</strong> method which returns the list of all products from the database.
-As you are an expert of Java 8, you are about to create a masterpiece by both simplifying the code and increasing performance.</p>
+<p>With those changes in place we can now test it. But does it mean we have to go through the whole <strong>build and test locally &#8594; deploy and test on OpenShift</strong> cycle?
+That can take a couple of minutes. Luckily, with <a href="https://github.com/Maistra/istio-workspace" target="_blank" rel="noopener">Istio Workspace</a>, we can now start service with our changes locally,
+but in a way like it would be running as part of the application in OpenShift.</p>
 </div>
 <div class="paragraph">
-<p><code><strong>Replace the content of the 'getAll()' method</strong></code> as following:</p>
+<p>In your <a href="http://codeready-workspaces.%APPS_HOSTNAME_SUFFIX%" class="params-link" target="_blank" rel="noopener">Workspace</a>,</p>
 </div>
-<div class="listingblock">
-<div class="title">CatalogController.java</div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset1_ide-task"></a>IDE Task</p>
+</li>
+<li>
+<p><a id="tabset1_cli"></a>CLI</p>
+</li>
+</ul>
+</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @ResponseBody
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List&lt;Product&gt; getAll() {
-        Spliterator&lt;Product&gt; products = repository.findAll().spliterator();
-        return StreamSupport.stream(products, false).collect(Collectors.toList());
-    }</code></pre>
+<div class="tab-pane" aria-labelledby="tabset1_ide-task">
+<div class="paragraph">
+<p><code><strong>Click on 'Terminal' &#8594; 'Run Task&#8230;&#8203;' &#8594;  'Catalog - Route Traffic to local'</strong></code></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/che-runtask.png" alt="Che - RunTask" width="500">
 </div>
 </div>
-<div class="admonitionblock important">
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_cli">
+<div class="paragraph">
+<p><code><strong>Execute the following commands in the '&gt;_ workshop_tools' terminal window</strong></code></p>
+</div>
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>Do not forget to import the missing packages.</p>
+To open a '&gt;_ workshop_tools' terminal window, <code><strong>click on 'Terminal' &#8594; 'Open Terminal in specific container' &#8594;  'workshop-tools'</strong></code>
+</td>
+</tr>
+</table>
 </div>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">cd /projects/workshop/catalog-spring-boot
+ike develop \
+    --deployment catalog-v1 \
+    --run 'mvn spring-boot:run' \
+    --port 9000:8080 \
+    --route header:ike-session-id=dist_trace</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+you kill all current <strong>ike</strong> process with the command: <code>pkill ike</code>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>This command will deploy a new version of the service which you can access by using special routing header.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/new-catalog-service.png" alt="New Catalog Deployed" width="700">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_the_new_version"><a class="anchor" href="#_test_the_new_version"></a>Test the new version</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As we have our improved service already up and running, it&#8217;s time to test the new version.
+You can now access application through web interface by adding <code><strong>/?route=dist_trace</strong></code> query parameter
+to the URL of deployed app:</p>
+</div>
+<div class="paragraph">
+<p><a href="{COOLSTORE_HOMEPAGE}/#!/?route=dist_trace" class="bare">{COOLSTORE_HOMEPAGE}/#!/?route=dist_trace</a></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code><strong>route=lab3</strong></code> is not automatically added by Istio Workspace.
+This parameter, like any other should be handled (and appropriately propagated) by the application itself.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Now let&#8217;s check and push the new version of the source code.</p>
-</div>
-<div class="paragraph">
-<p>In your {{ CHE_URL }}[Workspace^], via the command menu (Cmd+Shift+P ⌘⇧P on macOS or Ctrl+Shift+P ⌃⇧P on Windows and Linux),
-<code><strong>run 'Task: Run Task&#8230;&#8203;' &#8594;  'che: oc build catalog service'</strong></code></p>
+<p>From <a href="https://kiali-istio-system.%APPS_HOSTNAME_SUFFIX%" target="_blank" rel="noopener">Kiali</a>, in the <strong>'Graph' view</strong>, <code><strong>check the new traffic</strong></code></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/images/che-runtask.png" alt="Che - RunTask" width="500">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/images/che-buildcatalog.png" alt="Che - Build Catalog Service" width="500">
+<img src="_images/images/kiali-catalog-routed.png" alt="Catalog - Route Ike" width="700">
 </div>
 </div>
 <div class="paragraph">
-<p>Once deployed, generate traffic to the application (<a href="http://{{" class="bare">http://{{</a> COOLSTORE_PROJECT }}.{{ APPS_HOSTNAME_SUFFIX }}[<a href="http://{{" class="bare">http://{{</a> COOLSTORE_PROJECT }}.{{ APPS_HOSTNAME_SUFFIX }}^])
-then <code><strong>go back to Distributed Tracing menu</code></strong> from {{ KIALI_URL }}[Kiali Console^] and see the result.</p>
+<p>The traffic is directed to the new version of the Catalog service, but will keep all the other users still relying on the last deployed version.
+Sadly, they will be still affected by the performance regression we just fixed.</p>
+</div>
+<div class="paragraph">
+<p>We can also see directly in the console of your <a href="http://codeready-workspaces.%APPS_HOSTNAME_SUFFIX%" target="_blank" rel="noopener">Workspace</a>, that our service has been accessed, as we are printing a test message every single time <code><strong>CatalogController</strong></code> is accessed now.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/images/jaeger-trace-fixed-detail-view.png" alt="Jaeger - Trace Detail View" width="700">
+<img src="_images/images/ike-develop-catalog-hit.png" alt="Accessing new version of Catalog Service in Che" width="700">
 </div>
 </div>
 <div class="paragraph">
-<p>Just wonderful! You reduce the response time by a factor of 5!! You should be proud!!</p>
+<p>Moreover, we can see improvements in the response time as well:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/images/ike-develop-catalog-hit-jaeger.png" alt="New traces" width="800">
 </div>
 </div>
-<div class="sect2">
-<h3 id="_congratulations"><a class="anchor" href="#_congratulations"></a>CONGRATULATIONS!!!</h3>
+<div class="paragraph">
+<p>Just wonderful! You reduced the response time by a factor of 5! You should be proud!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_congratulations"><a class="anchor" href="#_congratulations"></a>CONGRATULATIONS!!!</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>You make it but <strong>is the spinning top stopped or not at the end?</strong></p>
 </div>
@@ -519,13 +480,10 @@ then <code><strong>go back to Distributed Tracing menu</code></strong> from {{ K
 <div class="content">
 <img src="_images/images/spinningtop.jpg" alt="Inception - Spinning Top" width="500">
 </div>
-</div>
-<div class="paragraph text-center">
-<p><a href="https://wallpapercave.com/wp/plK5eJm.jpg" target="_blank" rel="noopener">Source: https://wallpapercave.com/wp/plK5eJm.jpg</a></p>
+<div class="title"> Inception. Christopher Nolan (Warner Bros. Pictures)</div>
 </div>
 <div class="paragraph">
 <p>We will never know and now, it is time to go deeper again!!</p>
-</div>
 </div>
 </div>
 </div>
