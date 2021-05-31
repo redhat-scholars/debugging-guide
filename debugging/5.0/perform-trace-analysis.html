@@ -182,7 +182,7 @@ application traces and extract valuable information to solve the issues.</p>
 <h2 id="_what_are_you_hidding_mrmrs_application"><a class="anchor" href="#_what_are_you_hidding_mrmrs_application"></a>What are you hidding, Mr/Mrs <strong>Application</strong>?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>From the <a href="https://kiali-istio-system.%APPS_HOSTNAME_SUFFIX%" target="_blank" rel="noopener">Kiali Console</a>, <code><strong>click on the 'Distributed Tracing'</strong></code> in the left navigation.</p>
+<p>From the <a href="https://kiali-istio-system.%APPS_HOSTNAME_SUFFIX%" class="params-link" target="_blank" rel="noopener">Kiali Console</a>, <code><strong>click on the 'Distributed Tracing'</strong></code> in the left navigation.</p>
 </div>
 <div class="paragraph">
 <p>Then <code><strong>login as user%USER_ID%/%OPENSHIFT_PASSWORD% and enter the following configuration</strong></code>:</p>
@@ -418,11 +418,13 @@ you kill all current <strong>ike</strong> process with the command: <code>pkill 
 <div class="sectionbody">
 <div class="paragraph">
 <p>As we have our improved service already up and running, it&#8217;s time to test the new version.
-You can now access application through web interface by adding <code><strong>/?route=dist_trace</strong></code> query parameter
+You can now access application through web interface by adding <strong>/?route=dist_trace</strong> query parameter
 to the URL of deployed app:</p>
 </div>
-<div class="paragraph">
-<p><a href="http://web-staging-project%USER_ID%.%APPS_HOSTNAME_SUFFIX%/#!/?route=dist_trace" class="bare">http://web-staging-project%USER_ID%.%APPS_HOSTNAME_SUFFIX%/#!/?route=dist_trace</a></p>
+<div class="listingblock copypaste">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">http://web-staging-project%USER_ID%.%APPS_HOSTNAME_SUFFIX%/?route=dist_trace</code></pre>
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -431,14 +433,14 @@ to the URL of deployed app:</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code><strong>route=dist_trace</strong></code> is not automatically added by Istio Workspace.
+<strong>route=dist_trace</strong> is not automatically added by Istio Workspace.
 This parameter, like any other should be handled (and appropriately propagated) by the application itself.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>From <a href="https://kiali-istio-system.%APPS_HOSTNAME_SUFFIX%" target="_blank" rel="noopener">Kiali</a>, in the <strong>'Graph' view</strong>, <code><strong>check the new traffic</strong></code></p>
+<p>From <a href="https://kiali-istio-system.%APPS_HOSTNAME_SUFFIX%" class="params-link" target="_blank" rel="noopener">Kiali</a>, in the <strong>'Graph' view</strong>, <code><strong>check the new traffic</strong></code></p>
 </div>
 <div class="imageblock">
 <div class="content">
