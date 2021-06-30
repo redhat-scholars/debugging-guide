@@ -201,7 +201,7 @@ nice User Interface with a search field to explore and to analyze logs files eas
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/debug-coolstore-bug.png" alt="Inventory Status Bug" width="800">
+<img src="_images/debug-coolstore-bug.png" alt="Inventory Status Bug" width="600">
 </div>
 </div>
 <div class="paragraph">
@@ -212,11 +212,51 @@ nice User Interface with a search field to explore and to analyze logs files eas
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/kibana-console.png" alt="Kibana - Console" width="600">
+<img src="_images/kibana-console.png" alt="Kibana - Console" width="800">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Kibana requires an <strong>index pattern</strong> to access the Elasticsearch data that you want to explore.
+An <strong>index pattern</strong> selects the data to use and allows you to define properties of the fields.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After you log in, create an <strong>Index Pattern</strong> as follows:</p>
+</div>
+<div class="paragraph">
+<p><code><strong>At 'Step 1 of 2: Define index pattern', enter '*' in the 'Index Pattern' field.</strong></code></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/kibana-index-pattern-1.png" alt="Kibana - Index Pattern 1" width="800">
 </div>
 </div>
 <div class="paragraph">
-<p>After you log in, enter the following configuration:</p>
+<p>Then, <code><strong>click on '&gt; Next Step'</strong></code>.</p>
+</div>
+<div class="paragraph">
+<p>Next, <code><strong>At 'Step 2 of 2: Configure settings', select 'I don&#8217;t want to use the Time Filter' in the 'Time Filter field name' field.</strong></code></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/kibana-index-pattern-2.png" alt="Kibana - Index Pattern 2" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, <code><strong>click on 'Create index pattern'</strong></code>. Now you can visualize and explore logs files easily.</p>
+</div>
+<div class="paragraph">
+<p>For doing so, <code><strong>click on the 'Discover' menu and enter the following configuration</strong></code>:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Kibana Search</caption>
@@ -243,7 +283,7 @@ nice User Interface with a search field to explore and to analyze logs files eas
 </table>
 <div class="imageblock">
 <div class="content">
-<img src="_images/kibana-search.png" alt="Kibana - Search" width="200">
+<img src="_images/kibana-search.png" alt="Kibana - Search" width="600">
 </div>
 </div>
 <div class="paragraph">
