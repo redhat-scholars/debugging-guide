@@ -268,7 +268,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "*"
+        - "gateway-staging-project%USER_ID%.%APPS_HOSTNAME_SUFFIX%"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -276,16 +276,11 @@ metadata:
   name: gateway
 spec:
   hosts:
-    - "*"
+    - "gateway-staging-project%USER_ID%.%APPS_HOSTNAME_SUFFIX%"
   gateways:
     - istio-gateway%USER_ID%
   http:
-    - match:
-        - uri:
-            prefix: /staging-project%USER_ID%/api
-      rewrite:
-        uri: "/api"
-      route:
+    - route:
         - destination:
             port:
               number: 8080
@@ -298,7 +293,7 @@ EOF</code></pre>
 </div>
 <div class="listingblock copypaste">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">oc set env deployment/web COOLSTORE_GW_ENDPOINT=http://istio-ingressgateway-istio-system.%APPS_HOSTNAME_SUFFIX%/staging-project%USER_ID% -n staging-project%USER_ID%</code></pre>
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">oc set env deployment/web COOLSTORE_GW_ENDPOINT=http://gateway-staging-project%USER_ID%.%APPS_HOSTNAME_SUFFIX% -n staging-project%USER_ID%</code></pre>
 </div>
 </div>
 </div>
