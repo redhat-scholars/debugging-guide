@@ -70,9 +70,9 @@ image::argocd-synced-application.png[Argo CD - Synced Application, 800]
 == Controlling Ingress Traffic
 The Application deployed is using **Istio** (_covered in the next lab_). To be able to access the application from outside of the cluster we have to expose a specific service reachable externally, this service is called **Istio Gateway**. A Gateway allows Istio features such as monitoring and route rules to be applied to traffic entering the cluster. 
 
-NOTE: To open a '>_ workshop_tools' terminal window, `*click on 'Terminal' -> 'Open Terminal in specific container' ->  'workshop-tools'*`
+NOTE: To open a '>_ workshop_tools' terminal window in CodeReady Workspaces, `*click on 'Terminal' -> 'Open Terminal in specific container' ->  'workshop-tools'*`
 
-Create the Istio **Gateway** and its **VirtualService** `*by executing the following commands in the '>_ workshop_tools' terminal window*`
+In your {CHE_URL}[Workspace^, role='params-link'], create the Istio **Gateway** and its **VirtualService** `*by executing the following commands in the '>_ workshop_tools' terminal window*`
 
 [source,shell,subs="{markup-in-source}",role=copypaste]
 ----
