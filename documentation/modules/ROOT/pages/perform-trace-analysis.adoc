@@ -198,4 +198,6 @@ image::ike-develop-catalog-hit-jaeger.png[New traces, 800]
 
 Just wonderful! You reduced the response time by a factor of 5! You should be proud!
 
+`*You can now stop the "Catalog - Route Traffic to Local" (ike) process in the terminal by pressing Ctrl+C*`. This will result in undeploying our special instance which we just used for debugging purposes.
+
 Now, it is time to go deeper again!!

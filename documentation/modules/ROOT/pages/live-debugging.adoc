@@ -252,6 +252,6 @@ image::debug-coolstore-bug-fixed.png[Inventory Status Bug Fixed, 800]
 
 **If it looks ok we are ready to roll it out to production!**
 
-`*You can now stop ike process in the terminal by pressing Ctrl+C*`. This will result in undeploying our special instance which we just used for debugging purposes.
+`*You can now stop the "Inventory - Route Traffic to Local" (ike) process in the terminal by pressing Ctrl+C*`. This will result in undeploying our special instance which we just used for debugging purposes.
 
 Well done and congratulations for completing all the labs.
